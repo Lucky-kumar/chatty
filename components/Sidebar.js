@@ -9,16 +9,15 @@ import { auth,db } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {useCollection } from 'react-firebase-hooks/firestore';
 import Chat from './Chat';
-import { collection, addDoc, query, where } from "firebase/firestore"; 
-import { doc, setDoc } from "firebase/firestore"; 
-
-
-
 
 function Sidebar() {
     const [user] = useAuthState(auth);
-    const chatRef = collection(db,"chats");
-    const userChatRef = query(chatRef, where("users", "array-contains", user.email));
+
+
+
+
+
+    const userChatRef = db.collection("chats").where("users", "array-contains", user.email);
     const [chatsSnapshot] = useCollection(userChatRef);
     
     const createChat = () => {
@@ -29,16 +28,12 @@ function Sidebar() {
         if(!input) return null;
 
         if(EmailValidator.validate(input) 
+        && !chatAlreadyExists(input)
         && input !== user.email
         ) {
-            addDoc(doc(db, "chats"), {
+            db.collection("chats").add({
                 users: [user.email, input],
-              });
-
-            // collection(db,"chats)
-            // db.collection("chats").add({
-            //     users: [user.email, input],
-            // });
+            });
         }
     };
     
@@ -70,7 +65,7 @@ function Sidebar() {
             <SidebarButton onClick={createChat}>Start a new chat</SidebarButton>
 
             {chatsSnapshot?.docs.map((chat) => (
-                <Chat key={chat.id} id={chat.id} user={chat.data().users} />
+                <Chat key={chat.id} id={chat.id} users={chat.data().users} />
             ))}
         </Container>
     )

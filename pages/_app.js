@@ -4,19 +4,17 @@ import { auth, db } from '../firebase';
 import Login from "./login";
 import Loading from '../components/Loading';
 import { useEffect } from 'react';
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
-
+import firebase from 'firebase';
 
 function MyApp({ Component, pageProps }) {
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     if (user) {
-      const usersRef = collection(db, "users");
 
-      setDoc(doc(usersRef, "user"), {
+      db.collection("users").doc(user.uid).set({
         email: user.email,
-        lastSeen: serverTimestamp(),
+        lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
         photoURL: user.photoURL,
 
       }, { merge: true });
