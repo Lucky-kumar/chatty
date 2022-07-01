@@ -12,7 +12,7 @@ function Chat({ id, users }) {
     return (
         <Container>
             <UserAvatar />
-            <p>Recipient Email</p>
+            <p>{recipientEmail}</p>
         </Container>
 
     )
