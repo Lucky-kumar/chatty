@@ -8,6 +8,8 @@ import getRecipientEmail from './../../utils/getRecipientEmail';
 
 function Chat({ chat, messages }) {
 
+    console.log({chat,messages})
+
     const [user] = useAuthState(auth);
 
     return <Container>
@@ -46,7 +48,7 @@ export async function getServerSideProps(context) {
 
     const chat = {
         id: chatRes.id,
-        ...chatRes.data(),
+        ...chatRes.data()
     };
 
     return {
