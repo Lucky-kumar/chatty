@@ -12,6 +12,7 @@ import getRecipientEmail from './../utils/getRecipientEmail';
 import TimeAgo from 'timeago-react';
 
 const ChatScreen = ({ chat, messages }) => {
+    // console.log({chat,messages});
     const [user] = useAuthState(auth);
     const [input, setInput] = useState("");
     const endOfMessagesRef = useRef(null);
@@ -22,8 +23,6 @@ const ChatScreen = ({ chat, messages }) => {
     const [recipientSnapshot] = useCollection(
         db.collection("users").where("email", "==", getRecipientEmail(chat.users, user))
     );
-
-    console.log(recipientSnapshot);
 
     const showMessages = () => {
         if (messagesSnapshot) {
@@ -168,7 +167,7 @@ const HeaderInformation = styled.div`
 
 const MessageContainer = styled.div`
     padding: 30px;
-    background-color: #e5ded8;
+    background-color: #70d9ef;
     min-height: 90vh;
 `;
 
