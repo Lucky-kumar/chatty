@@ -16,7 +16,7 @@ function Chat({ chat, messages }) {
         </Head>
         <Sidebar />
         <ChatContainer>
-            <ChatScreen chat={chat} messages={messages}/>
+            <ChatScreen chat={chat} messages={messages} />
         </ChatContainer>
     </Container>
 }
@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
     const messages = messagesRes.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-    })).map(messages => ({
+    })).map((messages) => ({
         ...messages,
         timestamp: messages.timestamp.toDate().getTime()
     }));

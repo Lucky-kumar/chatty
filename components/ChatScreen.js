@@ -2,13 +2,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import styled from 'styled-components';
 import { auth, db } from '../firebase';
 import { useRouter } from 'next/router';
-import { Avatar, IconButton } from '@mui/material';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import MoreVert from '@mui/icons-material/MoreVert';
+import { Avatar } from '@mui/material';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import Message from './Message';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
-import MicIcon from '@mui/icons-material/Mic';
 import { useRef, useState } from 'react';
 import firebase from 'firebase';
 import getRecipientEmail from './../utils/getRecipientEmail';
@@ -103,14 +100,6 @@ const ChatScreen = ({ chat, messages }) => {
                         <p>Loading Last active...</p>
                     )}
                 </HeaderInformation>
-                <HeaderIcon>
-                    <IconButton>
-                        <AttachFileIcon />
-                    </IconButton>
-                    <IconButton>
-                        <MoreVert />
-                    </IconButton>
-                </HeaderIcon>
             </Header>
 
             <MessageContainer>
@@ -122,9 +111,7 @@ const ChatScreen = ({ chat, messages }) => {
                 <InsertEmoticonIcon />
                 <Input value={input} onChange={(e) => setInput(e.target.value)} />
                 <button hidden disabled={!input} type="submit" onClick={sendMessage} >Send Message</button>
-                <MicIcon />
             </InputContainer>
-
         </Container>
     )
 }
@@ -178,8 +165,6 @@ const HeaderInformation = styled.div`
         color: gray;
     }
 `;
-
-const HeaderIcon = styled.div``;
 
 const MessageContainer = styled.div`
     padding: 30px;
