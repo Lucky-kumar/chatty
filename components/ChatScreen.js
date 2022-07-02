@@ -97,7 +97,7 @@ const ChatScreen = ({ chat, messages }) => {
                             Last active: {' '}
                             {recipient?.lastSeen?.toDate() ? (
                                 <TimeAgo datetime={recipient?.lastSeen?.toDate()} />
-                            ) : "Unavailabel"}
+                            ) : "Unavailable"}
                         </p>
                     ) : (
                         <p>Loading Last active...</p>
@@ -187,4 +187,6 @@ const MessageContainer = styled.div`
     min-height: 90vh;
 `;
 
-const EndOfMessages = styled.div``;
+const EndOfMessages = styled.div`
+    margin-bottom:50px;
+`;
