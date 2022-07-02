@@ -13,7 +13,7 @@ import { useState } from 'react';
 import firebase from 'firebase';
 import getRecipientEmail from './../utils/getRecipientEmail';
 
-const ChatScreen = ({chat,messages}) => {
+const ChatScreen = ({ chat, messages }) => {
     const [user] = useAuthState(auth);
     const [input, setInput] = useState("");
     const router = useRouter();
@@ -21,8 +21,10 @@ const ChatScreen = ({chat,messages}) => {
         db.collection("chats").doc(router.query.id).collection("messages").orderBy("timestamp", "asc")
     );
     const [recipientSnapshot] = useCollection(
-        db.collection("users").where("email","===",getRecipientEmail(chat.users,user))
-    ); 
+        db.collection("users").where("email", "==", getRecipientEmail(chat.users, user))
+    );
+
+    console.log(recipientSnapshot);
 
     const showMessages = () => {
         if (messagesSnapshot) {
@@ -72,14 +74,15 @@ const ChatScreen = ({chat,messages}) => {
         <Container>
             <Header>
                 {recipient ? (
-                    <Avatar src={recipient?.photoURL}/>
-                ): (
+                    <Avatar src={recipient?.photoURL} />
+                ) : (
                     <Avatar>{recipientEmail[0]}</Avatar>
                 )
                 }
 
                 <HeaderInformation>
                     <h3>{recipientEmail}</h3>
+                    
                     <p>Last seen...</p>
                 </HeaderInformation>
                 <HeaderIcon>
