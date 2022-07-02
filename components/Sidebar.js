@@ -1,51 +1,47 @@
 import styled from 'styled-components';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button, IconButton } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import * as EmailValidator from "email-validator";
-import { auth,db } from '../firebase';
+import { auth, db } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {useCollection } from 'react-firebase-hooks/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import Chat from './Chat';
+import Avatar from '@mui/material/Avatar';
+
 
 function Sidebar() {
     const [user] = useAuthState(auth);
-
-
-
-
-
     const userChatRef = db.collection("chats").where("users", "array-contains", user.email);
     const [chatsSnapshot] = useCollection(userChatRef);
-    
+
     const createChat = () => {
         const input = prompt(
             "Please enter an email address for the user you wish to chat with"
         );
 
-        if(!input) return null;
+        if (!input) return null;
 
-        if(EmailValidator.validate(input) 
-        && !chatAlreadyExists(input)
-        && input !== user.email
+        if (EmailValidator.validate(input)
+            && !chatAlreadyExists(input)
+            && input !== user.email
         ) {
             db.collection("chats").add({
                 users: [user.email, input],
             });
         }
     };
-    
+
     const chatAlreadyExists = (recipientEmail) =>
         !!chatsSnapshot?.docs.find(
-            (chat) => 
-                chat.data().users.find((user) => user === recipientEmail)?.length >0);   
+            (chat) =>
+                chat.data().users.find((user) => user === recipientEmail)?.length > 0);
 
     return (
         <Container>
             <Header>
-                <UserAvatar onClick={() => auth.signOut()} />
+                <UserAvatar src={user.photoURL} onClick={() => auth.signOut()} />
 
                 <IconsContainer>
                     <IconButton>
@@ -74,7 +70,19 @@ function Sidebar() {
 export default Sidebar
 
 const Container = styled.div`
+    flex: 0.45;
+    border-right: 1px solid whitesmoke;
+    height: 100vh;
+    min-width:300px;
+    max-width:350px;
+    overflow-y: scroll;
 
+    ::-webkit-scrollbar{
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 `;
 
 const Search = styled.div`
@@ -114,7 +122,7 @@ const Header = styled.div`
     border-bottom: 1px solid whitesmoke;
 `;
 
-const UserAvatar = styled(AccountCircleIcon)`
+const UserAvatar = styled(Avatar)`
 
     cursor: pointer;
 
