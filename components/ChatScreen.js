@@ -26,8 +26,6 @@ const ChatScreen = ({ chat, messages }) => {
         db.collection("users").where("email", "==", getRecipientEmail(chat.users, user))
     );
 
-    console.log(recipientSnapshot);
-
     const showMessages = () => {
         if (messagesSnapshot) {
             return messagesSnapshot.docs.map((message) => (
