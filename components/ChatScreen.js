@@ -167,7 +167,7 @@ const HeaderInformation = styled.div`
 
 const MessageContainer = styled.div`
     padding: 30px;
-    background-color: #70d9ef;
+    background-color: #e5ded8;
     min-height: 90vh;
 `;
 
