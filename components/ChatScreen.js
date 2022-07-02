@@ -9,7 +9,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import Message from './Message';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import MicIcon from '@mui/icons-material/Mic';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import firebase from 'firebase';
 import getRecipientEmail from './../utils/getRecipientEmail';
 import TimeAgo from 'timeago-react';
@@ -17,6 +17,7 @@ import TimeAgo from 'timeago-react';
 const ChatScreen = ({ chat, messages }) => {
     const [user] = useAuthState(auth);
     const [input, setInput] = useState("");
+    const endOfMessagesRef = useRef(null);
     const router = useRouter();
     const [messagesSnapshot] = useCollection(
         db.collection("chats").doc(router.query.id).collection("messages").orderBy("timestamp", "asc")
@@ -47,6 +48,13 @@ const ChatScreen = ({ chat, messages }) => {
         }
     };
 
+    const scrollToBottom = () => {
+        endOfMessagesRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
     const sendMessage = (e) => {
         e.preventDefault();
 
@@ -66,6 +74,7 @@ const ChatScreen = ({ chat, messages }) => {
         });
 
         setInput('');
+        scrollToBottom();
     };
 
     const recipient = recipientSnapshot?.docs?.[0]?.data();
@@ -106,7 +115,7 @@ const ChatScreen = ({ chat, messages }) => {
 
             <MessageContainer>
                 {showMessages()}
-                <EndOfMessages />
+                <EndOfMessages ref={endOfMessagesRef} />
             </MessageContainer>
 
             <InputContainer>
