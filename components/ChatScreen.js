@@ -10,9 +10,12 @@ import { useRef, useState } from 'react';
 import firebase from 'firebase';
 import getRecipientEmail from './../utils/getRecipientEmail';
 import TimeAgo from 'timeago-react';
+import SendIcon from '@mui/icons-material/Send';
+import { IconButton } from '@mui/material';
+
 
 const ChatScreen = ({ chat, messages }) => {
-    // console.log({chat,messages});
+
     const [user] = useAuthState(auth);
     const [input, setInput] = useState("");
     const endOfMessagesRef = useRef(null);
@@ -107,9 +110,11 @@ const ChatScreen = ({ chat, messages }) => {
             </MessageContainer>
 
             <InputContainer>
-                <InsertEmoticonIcon />
                 <Input value={input} onChange={(e) => setInput(e.target.value)} />
                 <button hidden disabled={!input} type="submit" onClick={sendMessage} >Send Message</button>
+                <IconButton>
+                <SendIcon onClick={sendMessage} />
+                </IconButton>
             </InputContainer>
         </Container>
     )
