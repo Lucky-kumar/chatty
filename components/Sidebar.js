@@ -7,6 +7,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import Chat from './Chat';
 import Avatar from '@mui/material/Avatar';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import styles from '../styles/login.module.css'
 
 
 function Sidebar() {
@@ -40,6 +41,7 @@ function Sidebar() {
         <Container>
             <Header>
                 <UserAvatar src={user.photoURL}  />
+                <h1 className={styles.name}>Chatty</h1>
 
                 <IconsContainer>
                     <IconButton>

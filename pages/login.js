@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import { auth, provider } from '../firebase';
+import styles from '../styles/login.module.css'
 
 const Login = () => {
 
@@ -19,6 +20,7 @@ const Login = () => {
                 <Logo
                     src="https://img.icons8.com/external-sbts2018-outline-color-sbts2018/344/external-chat-seo-4.-1-sbts2018-outline-color-sbts2018-3.png"
                 />
+                <h1 className={styles.name}>Chatty</h1>
                 <Button variant="outlined" onClick={signIn} >Sign in with Google</Button>
             </LoginContainer>
         </Container>
